@@ -1,0 +1,22 @@
+web:
+  extensions:
+    FriendsOfBehat\SymfonyExtension:
+      kernel:
+        class: ECommerce\Apps\Web\WebKernel
+      bootstrap: apps/web/src/bootstrap.php
+    Behat\MinkExtension:
+      sessions:
+        symfony:
+          symfony: ~
+      base_url: 'http://127.0.0.1/'
+
+  suites:
+    health_check:
+      paths: [ apps/web/tests/Features/health-check.feature ]
+      contexts:
+        - ECommerce\Tests\Shared\Infrastructure\Behat\ApiContext
+
+    users:
+      paths: [ apps/web/tests/Features/users ]
+      contexts:
+        - ECommerce\Tests\Users\Infrastructure\Behat\UsersFeatureContext

@@ -1,0 +1,21 @@
+.idea/
+vendor/
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+/**/var/
+###< symfony/framework-bundle ###
+.env
+*.cache
+
+*.log
+*.log.[0-9]
+*.log.[0-9][0-9]
+*.log.[0-9][0-9][0-9]
+
