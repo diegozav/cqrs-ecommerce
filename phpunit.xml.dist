@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="apps/web/src/bootstrap.php"
+         colors="true">
+    <php>
+        <ini name="error_reporting" value="-1"/>
+        <server name="APP_DEBUG" value="false" force="true"/>
+        <server name="KERNEL_CLASS" value="ECommerce\Apps\Web\WebKernel"/>
+    </php>
+
+    <testsuites>
+        <testsuite name="unit">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

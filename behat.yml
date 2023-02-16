@@ -1,0 +1,2 @@
+imports:
+  - apps/web/tests/Behat/web.yml

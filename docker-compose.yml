@@ -1,0 +1,44 @@
+version: '3.7'
+services:
+  cqrs-web-php:
+    build:
+      dockerfile: ./infrastructure/docker/php/Dockerfile
+      target: development
+      context: .
+    image: cqrs-symfony-php-8.1:latest
+    container_name: cqrs-web-php
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - cqrs-network
+
+  cqrs-web-postgres:
+    image: postgres
+    container_name: cqrs-web-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: toor
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./apps/web/var/postgres/:/var/lib/postgresql/data
+    networks:
+      - cqrs-network
+
+  cqrs-web-nginx:
+    image: nginx:alpine
+    container_name: cqrs-web-nginx
+    restart: unless-stopped
+    ports: [ "8080:8080" ]
+    volumes:
+      - ./infrastructure/docker/nginx/conf.d/web.conf:/etc/nginx/conf.d/web.conf:cached
+    networks:
+      - cqrs-network
+
+networks:
+  cqrs-network:
+    driver: bridge

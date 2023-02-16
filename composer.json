@@ -1,0 +1,50 @@
+{
+    "name": "diegozav/cqrs-symfony",
+    "description": "CQRS project written in PHP 8.2 and Symfony 6.2",
+    "type": "project",
+    "license": "MIT",
+    "scripts": {
+        "test:acceptance": "./vendor/bin/behat -p web --format pretty",
+        "test:unit": "./vendor/bin/phpunit --testdox",
+        "format:code": "vendor/bin/ecs check --clear-cache --fix"
+    },
+    "autoload": {
+        "psr-4": {
+            "ECommerce\\Apps\\Web\\": "apps/web/src",
+            "ECommerce\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ECommerce\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Diego Zavaleta"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "symfony/dotenv": "^6.2",
+        "symfony/framework-bundle": "^6.2",
+        "symfony/runtime": "^6.2",
+        "doctrine/dbal": "^3.6",
+        "lambdish/phunctional": "^2.1",
+        "ramsey/uuid": "^4.7",
+        "opis/json-schema": "^2.3"
+    },
+    "require-dev": {
+        "behat/behat": "^3.12",
+        "friends-of-behat/symfony-extension": "^2.4",
+        "friends-of-behat/mink-extension": "^2.7",
+        "friends-of-behat/mink-browserkit-driver": "^1.6",
+        "phpunit/phpunit": "^10.0",
+        "symplify/easy-coding-standard": "^11.2"
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/runtime": true
+        }
+    }
+}
