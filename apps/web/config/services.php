@@ -31,10 +31,13 @@ return function (ContainerConfigurator $container) {
     // Autowire
     $services->load('ECommerce\\', "{$baseDir}/src/")
         ->exclude([
-            "{$baseDir}/src/Users/Application/**/*Command.php",
-            "{$baseDir}/src/{Shared,Users}/Domain/Model",
-            "{$baseDir}/src/{Shared,Users}/Domain/Exception",
-            "{$baseDir}/src/{Users}/Domain/Event",
+            "{$baseDir}/src/{Users,Products}/Application/**/*Command.php",
+            "{$baseDir}/src/{Users,Products}/Application/**/*Query.php",
+            "{$baseDir}/src/{Users,Products}/Domain/Model",
+            "{$baseDir}/src/{Users,Products}/Domain/Event",
+            "{$baseDir}/src/{Users,Products}/Domain/ReadModel",
+            "{$baseDir}/src/{Users,Products}/Domain/Exception",
+            "{$baseDir}/src/{Shared}/Domain/{Model,Exception,Criteria,ValueObject}",
         ])
         ->autoconfigure()
         ->autowire()
