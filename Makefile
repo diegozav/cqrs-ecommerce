@@ -9,6 +9,7 @@ export IMAGE 	 = cqrs-symfony-php-8.1:latest
 .PHONY: build
 build:
 	docker-compose build --build-arg USER_ID=$(USER_ID)
+	make dependencies
 
 .PHONY: dependencies
 dependencies:
@@ -16,7 +17,7 @@ dependencies:
 
 .PHONY: start
 start:
-	docker-compose up
+	docker-compose up -d
 
 .PHONY: start
 shell:
@@ -25,3 +26,15 @@ shell:
 .PHONY: code-format
 format-code:
 	docker-compose run --rm cqrs-web-php composer run format:code
+
+.PHONY: ping-postgres
+ping-database:
+	@docker exec cqrs-web-postgres bash -c "pg_isready -U postgres -d postgres"
+
+.PHONY: test-unit
+test-unit:
+	docker-compose run --rm cqrs-web-php composer run test:unit
+
+.PHONY: test-acceptance
+test-acceptance:
+	docker exec -t cqrs-web-php composer run test:acceptance

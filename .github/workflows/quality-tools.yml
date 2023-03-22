@@ -1,0 +1,15 @@
+name: Quality Tools (on pull request)
+on:
+  pull_request:
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Build project ⚙️
+        run: make build
+
+      - name: Run code standard validation 〄
+        run:  make format-code

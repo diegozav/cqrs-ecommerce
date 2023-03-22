@@ -1,0 +1,21 @@
+name: Tests (on pull request)
+on:
+  pull_request:
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Build project ⚙️
+        run: make build
+
+      - name: Run Unit Tests 🧪
+        run:  make test-unit
+
+      - name: Run Acceptance Tests
+        run: |
+          make start
+          ./wait-databases.sh
+          make test-acceptance
