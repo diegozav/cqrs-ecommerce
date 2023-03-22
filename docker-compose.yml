@@ -26,6 +26,7 @@ services:
       - "5432:5432"
     volumes:
       - ./apps/web/var/postgres/:/var/lib/postgresql/data
+      - ./infrastructure/docker/postgres/:/docker-entrypoint-initdb.d/
     networks:
       - cqrs-network
 

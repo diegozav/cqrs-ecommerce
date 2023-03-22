@@ -18,8 +18,8 @@ return function (ContainerConfigurator $container) {
     // Autowire
     $services->load('ECommerce\\Tests\\', "{$baseDir}/tests/")
         ->exclude([
-            //"$baseDir/src/Users/Application/**/*Command.php",
-            //"$baseDir/src/{Shared,Users}/Domain/Model",
+            "{$baseDir}/tests/Users/Application/**/*Command*.php",
+            "{$baseDir}/tests/{Shared,Users}/Domain/",
             //"$baseDir/src/{Shared,Users}/Domain/Exception",
             //"$baseDir/src/{Shared,Users}/Domain/Event",
         ])
