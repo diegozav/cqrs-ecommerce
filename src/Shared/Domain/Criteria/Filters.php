@@ -6,20 +6,15 @@ namespace ECommerce\Shared\Domain\Criteria;
 
 use ECommerce\Shared\Domain\Collection;
 
-use function Lambdish\Phunctional\reduce;
-use function array_merge;
 use function array_map;
+use function array_merge;
+use function Lambdish\Phunctional\reduce;
 
 final readonly class Filters extends Collection
 {
     public static function fromValues(array $values): self
     {
         return new self(array_map(self::filterBuilder(), $values));
-    }
-
-    private static function filterBuilder(): callable
-    {
-        return fn(array $values) => Filter::fromValues($values);
     }
 
     public function add(Filter $filter): self
@@ -35,7 +30,7 @@ final readonly class Filters extends Collection
     public function serialize(): string
     {
         return reduce(
-            static fn(string $accumulate, Filter $filter) => sprintf('%s^%s', $accumulate, $filter->serialize()),
+            static fn (string $accumulate, Filter $filter) => sprintf('%s^%s', $accumulate, $filter->serialize()),
             $this->items(),
             ''
         );
@@ -44,5 +39,10 @@ final readonly class Filters extends Collection
     protected function classType(): string
     {
         return Filter::class;
+    }
+
+    private static function filterBuilder(): callable
+    {
+        return fn (array $values) => Filter::fromValues($values);
     }
 }

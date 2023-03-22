@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ECommerce\Apps\Web\Controllers\Signup;
+namespace ECommerce\Apps\Web\Controllers\Users;
 
 use ECommerce\Shared\Infrastructure\Http\HttpRequestWithValidation;
 

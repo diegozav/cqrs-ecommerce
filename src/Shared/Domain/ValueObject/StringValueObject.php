@@ -6,7 +6,8 @@ namespace ECommerce\Shared\Domain\ValueObject;
 
 readonly class StringValueObject
 {
-    public function __construct(public string $value)
-    {
+    public function __construct(
+        public string $value
+    ) {
     }
 }

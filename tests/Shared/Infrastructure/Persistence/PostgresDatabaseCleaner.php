@@ -11,6 +11,10 @@ use function sprintf;
 
 final class PostgresDatabaseCleaner
 {
+    private array $excludedTables = [
+        //'products'
+    ];
+
     public function __invoke(Connection $connection): void
     {
         $tables = $this->getTables($connection);
@@ -28,8 +32,12 @@ final class PostgresDatabaseCleaner
             WHERE schemaname LIKE 'public';
         SQL;
 
-        return $connection->executeQuery($query)
+        $rows = $connection->executeQuery($query)
             ->fetchAllAssociative();
+
+        $tables = map(fn (array $row) => $row['tablename'], $rows);
+
+        return array_diff($tables, $this->excludedTables);
     }
 
     private function truncateDatabaseSql(array $tables): string
@@ -42,16 +50,7 @@ final class PostgresDatabaseCleaner
         SQL;
 
         return implode(
-            map(
-                fn (array $table): string => sprintf(
-                    $truncateQuery,
-                    $table['tablename'],
-                    $table['tablename'],
-                    $table['tablename'],
-                    $table['tablename']
-                ),
-                $tables
-            )
+            map(fn (string $table): string => sprintf($truncateQuery, $table, $table, $table, $table), $tables)
         );
     }
 }

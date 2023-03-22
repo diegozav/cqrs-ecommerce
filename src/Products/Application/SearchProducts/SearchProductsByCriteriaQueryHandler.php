@@ -10,8 +10,9 @@ use ECommerce\Shared\Domain\Criteria\Criteria;
 
 final readonly class SearchProductsByCriteriaQueryHandler
 {
-    public function __construct(private ProductReadModelRepository $repository)
-    {
+    public function __construct(
+        private ProductReadModelRepository $repository
+    ) {
     }
 
     public function __invoke(SearchProductsByCriteriaQuery $query): ProductReadModelCollection

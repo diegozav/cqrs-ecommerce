@@ -10,6 +10,7 @@ use ECommerce\Shared\Domain\Criteria\Order;
 final readonly class SearchProductsByCriteriaQuery
 {
     public Filters $filters;
+
     public Order $order;
 
     public function __construct(

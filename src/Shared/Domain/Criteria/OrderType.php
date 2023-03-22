@@ -14,12 +14,12 @@ enum OrderType: string
 
     public function isNone(): bool
     {
-        return $this->value == self::NONE;
+        return $this->value === self::NONE->value;
     }
 
     public static function fromValue(string $value): self
     {
-        if (!self::tryFrom($value)) {
+        if (! self::tryFrom($value)) {
             throw new InvalidArgumentException(sprintf('Invalid value %s for %s', $value, self::class));
         }
 

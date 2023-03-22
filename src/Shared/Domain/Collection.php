@@ -9,25 +9,15 @@ use Countable;
 use IteratorAggregate;
 use RuntimeException;
 
+use function count;
+
 abstract readonly class Collection implements Countable, IteratorAggregate
 {
-    public function __construct(private array $items)
-    {
+    public function __construct(
+        private array $items
+    ) {
         $this->assertArrayIsSameInstance($items, $this->classType());
     }
-
-    private function assertArrayIsSameInstance(array $items, string $classType): void
-    {
-        foreach ($items as $item) {
-            if (!($item instanceof $classType)) {
-                throw new RuntimeException(
-                    sprintf('Item %s from collection does not have expected %s instance', $item::class, $classType)
-                );
-            }
-        }
-    }
-
-    abstract protected function classType(): string;
 
     public function getIterator(): ArrayIterator
     {
@@ -36,7 +26,7 @@ abstract readonly class Collection implements Countable, IteratorAggregate
 
     public function count(): int
     {
-        return count($this->items());
+        return count($this->items);
     }
 
     public function items(): array
@@ -44,4 +34,16 @@ abstract readonly class Collection implements Countable, IteratorAggregate
         return $this->items;
     }
 
+    abstract protected function classType(): string;
+
+    private function assertArrayIsSameInstance(array $items, string $classType): void
+    {
+        foreach ($items as $item) {
+            if (! ($item instanceof $classType)) {
+                throw new RuntimeException(
+                    sprintf('Item %s from collection does not have expected %s instance', $item::class, $classType)
+                );
+            }
+        }
+    }
 }

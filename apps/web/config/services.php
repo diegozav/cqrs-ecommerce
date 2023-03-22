@@ -10,6 +10,7 @@ use ECommerce\Shared\Infrastructure\Bus\Command\CommandToHandlerMapping;
 use ECommerce\Shared\Infrastructure\Bus\Command\Middleware\HandleCommandsMiddleware;
 use ECommerce\Shared\Infrastructure\Bus\Command\Middleware\LogCommandsMiddleware;
 use ECommerce\Shared\Infrastructure\Bus\Command\Middleware\TransactionalCommandHandlerMiddleware;
+use ECommerce\Shared\Infrastructure\Http\JsonSchemaValidator;
 use ECommerce\Shared\Infrastructure\PhpImmutableDateTimeGenerator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
@@ -53,6 +54,9 @@ return function (ContainerConfigurator $container) {
         ->public();
 
     $services->set(DateTimeGenerator::class, PhpImmutableDateTimeGenerator::class);
+
+    $services->set(JsonSchemaValidator::class, JsonSchemaValidator::class)
+        ->share(false);
 
     $services->set(HandleCommandsMiddleware::class, HandleCommandsMiddleware::class)
         ->args([service('service_container'), service(CommandToHandlerMapping::class)]);

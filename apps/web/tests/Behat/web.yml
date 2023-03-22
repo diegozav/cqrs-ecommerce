@@ -17,6 +17,11 @@ web:
         - ECommerce\Tests\Shared\Infrastructure\Behat\ApiContext
 
     users:
-      paths: [ apps/web/tests/Features/users ]
+      paths: [ apps/web/tests/Features/Users ]
       contexts:
         - ECommerce\Tests\Users\Infrastructure\Behat\UsersFeatureContext
+
+    products:
+      paths: [ apps/web/tests/Features/Products ]
+      contexts:
+        - ECommerce\Tests\Products\Infrastructure\Behat\ProductsFeatureContext

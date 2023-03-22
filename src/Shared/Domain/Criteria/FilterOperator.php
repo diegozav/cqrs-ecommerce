@@ -17,10 +17,15 @@ enum FilterOperator: string
 
     public static function fromValue(string $value): self
     {
-        if (!self::tryFrom($value)) {
+        if (! self::tryFrom($value)) {
             throw new InvalidArgumentException(sprintf('Invalid value %s for %s', $value, self::class));
         }
 
         return self::from($value);
+    }
+
+    public function equals(self $operator): bool
+    {
+        return $operator->value === $this->value;
     }
 }

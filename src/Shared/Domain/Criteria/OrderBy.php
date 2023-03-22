@@ -8,5 +8,4 @@ use ECommerce\Shared\Domain\ValueObject\StringValueObject;
 
 final readonly class OrderBy extends StringValueObject
 {
-
 }
