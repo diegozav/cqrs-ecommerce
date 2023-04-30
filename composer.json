@@ -32,7 +32,8 @@
         "doctrine/dbal": "^3.6",
         "lambdish/phunctional": "^2.1",
         "ramsey/uuid": "^4.7",
-        "opis/json-schema": "^2.3"
+        "opis/json-schema": "^2.3",
+        "doctrine/migrations": "^3.6"
     },
     "require-dev": {
         "behat/behat": "^3.12",

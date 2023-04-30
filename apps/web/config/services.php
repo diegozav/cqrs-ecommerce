@@ -38,6 +38,7 @@ return function (ContainerConfigurator $container) {
             "{$baseDir}/src/{Users,Products}/Domain/Event",
             "{$baseDir}/src/{Users,Products}/Domain/ReadModel",
             "{$baseDir}/src/{Users,Products}/Domain/Exception",
+            "{$baseDir}/src/Shared/Infrastructure/Persistence/Doctrine",
             "{$baseDir}/src/{Shared}/Domain/{Model,Exception,Criteria,ValueObject}",
         ])
         ->autoconfigure()
