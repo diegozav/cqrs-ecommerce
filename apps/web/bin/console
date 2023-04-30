@@ -1,6 +1,23 @@
 #!/usr/bin/env php
 <?php
 
+use Doctrine\DBAL\Connection;
+use Doctrine\Migrations\Configuration\Connection\ExistingConnection;
+use Doctrine\Migrations\Configuration\Migration\PhpFile;
+use Doctrine\Migrations\DependencyFactory;
+use Doctrine\Migrations\Tools\Console\Command\CurrentCommand;
+use Doctrine\Migrations\Tools\Console\Command\DiffCommand;
+use Doctrine\Migrations\Tools\Console\Command\DumpSchemaCommand;
+use Doctrine\Migrations\Tools\Console\Command\ExecuteCommand;
+use Doctrine\Migrations\Tools\Console\Command\GenerateCommand;
+use Doctrine\Migrations\Tools\Console\Command\LatestCommand;
+use Doctrine\Migrations\Tools\Console\Command\ListCommand;
+use Doctrine\Migrations\Tools\Console\Command\MigrateCommand;
+use Doctrine\Migrations\Tools\Console\Command\RollupCommand;
+use Doctrine\Migrations\Tools\Console\Command\StatusCommand;
+use Doctrine\Migrations\Tools\Console\Command\SyncMetadataCommand;
+use Doctrine\Migrations\Tools\Console\Command\UpToDateCommand;
+use Doctrine\Migrations\Tools\Console\Command\VersionCommand;
 use ECommerce\Apps\Web\WebKernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 
@@ -12,6 +29,37 @@ require_once dirname(__DIR__) . '/../../vendor/autoload_runtime.php';
 
 return function (array $context) {
     $kernel = new WebKernel($context['APP_ENV'], (bool)$context['APP_DEBUG']);
+    $kernel->boot();
 
-    return new Application($kernel);
+    $app = new Application($kernel);
+
+    $connection = $kernel->getContainer()->get(Connection::class);
+
+    if (!$connection) {
+        throw new RuntimeException('You need to configure a database connection first');
+    }
+
+    $configuration = new PhpFile(__DIR__ . '/../../../src/Shared/Infrastructure/Persistence/Doctrine/Migrations/config.php');
+
+    $dependencyFactory = DependencyFactory::fromConnection(
+        $configuration,
+        new ExistingConnection($connection)
+    );
+
+    $app->add(new CurrentCommand($dependencyFactory));
+    $app->add(new DiffCommand($dependencyFactory));
+    $app->add(new DumpSchemaCommand($dependencyFactory));
+    $app->add(new ExecuteCommand($dependencyFactory));
+    $app->add(new GenerateCommand($dependencyFactory));
+    $app->add(new LatestCommand($dependencyFactory));
+    $app->add(new ListCommand($dependencyFactory));
+    $app->add(new MigrateCommand($dependencyFactory));
+    $app->add(new RollupCommand($dependencyFactory));
+    $app->add(new StatusCommand($dependencyFactory));
+    $app->add(new SyncMetadataCommand($dependencyFactory));
+    $app->add(new UpToDateCommand($dependencyFactory));
+    $app->add(new VersionCommand($dependencyFactory));
+
+    return $app;
 };
+

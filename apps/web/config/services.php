@@ -34,6 +34,7 @@ return function (ContainerConfigurator $container) {
             "{$baseDir}/src/Users/Application/**/*Command.php",
             "{$baseDir}/src/{Shared,Users}/Domain/Model",
             "{$baseDir}/src/{Shared,Users}/Domain/Exception",
+            "{$baseDir}/src/Shared/Infrastructure/Persistence/Doctrine",
             "{$baseDir}/src/{Users}/Domain/Event",
         ])
         ->autoconfigure()
