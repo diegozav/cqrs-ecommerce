@@ -10,6 +10,7 @@ use ECommerce\Shared\Infrastructure\Bus\Command\CommandToHandlerMapping;
 use ECommerce\Shared\Infrastructure\Bus\Command\Middleware\HandleCommandsMiddleware;
 use ECommerce\Shared\Infrastructure\Bus\Command\Middleware\LogCommandsMiddleware;
 use ECommerce\Shared\Infrastructure\Bus\Command\Middleware\TransactionalCommandHandlerMiddleware;
+use ECommerce\Shared\Infrastructure\Http\JsonSchemaValidator;
 use ECommerce\Shared\Infrastructure\PhpImmutableDateTimeGenerator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
@@ -31,11 +32,14 @@ return function (ContainerConfigurator $container) {
     // Autowire
     $services->load('ECommerce\\', "{$baseDir}/src/")
         ->exclude([
-            "{$baseDir}/src/Users/Application/**/*Command.php",
-            "{$baseDir}/src/{Shared,Users}/Domain/Model",
-            "{$baseDir}/src/{Shared,Users}/Domain/Exception",
+            "{$baseDir}/src/{Users,Products}/Application/**/*Command.php",
+            "{$baseDir}/src/{Users,Products}/Application/**/*Query.php",
+            "{$baseDir}/src/{Users,Products}/Domain/Model",
+            "{$baseDir}/src/{Users,Products}/Domain/Event",
+            "{$baseDir}/src/{Users,Products}/Domain/ReadModel",
+            "{$baseDir}/src/{Users,Products}/Domain/Exception",
             "{$baseDir}/src/Shared/Infrastructure/Persistence/Doctrine",
-            "{$baseDir}/src/{Users}/Domain/Event",
+            "{$baseDir}/src/{Shared}/Domain/{Model,Exception,Criteria,ValueObject}",
         ])
         ->autoconfigure()
         ->autowire()
@@ -51,6 +55,9 @@ return function (ContainerConfigurator $container) {
         ->public();
 
     $services->set(DateTimeGenerator::class, PhpImmutableDateTimeGenerator::class);
+
+    $services->set(JsonSchemaValidator::class, JsonSchemaValidator::class)
+        ->share(false);
 
     $services->set(HandleCommandsMiddleware::class, HandleCommandsMiddleware::class)
         ->args([service('service_container'), service(CommandToHandlerMapping::class)]);

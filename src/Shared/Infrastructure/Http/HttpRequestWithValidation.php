@@ -22,9 +22,9 @@ abstract class HttpRequestWithValidation
     {
         $this->ensureIsAValidJsonRequest($request);
 
-        $requestBodyData = json_decode($request->getContent());
+        $requestBodyData = json_decode($request->getContent(), true);
 
-        $errors = $this->validator->validate($requestBodyData, static::schema());
+        $errors = $this->validator->validate((object) $requestBodyData, static::schema());
 
         if ($errors) {
             throw JsonSchemaValidationException::default($errors);
