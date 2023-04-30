@@ -19,7 +19,7 @@ class ApiContext extends RawMinkContext
 {
     public function __construct(
         protected Connection $connection,
-        private readonly KernelBrowser $httpClient,
+        protected readonly KernelBrowser $httpClient,
         private readonly JsonSchemaValidator $jsonSchemaValidator,
     ) {
     }
